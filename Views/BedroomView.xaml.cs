@@ -12,13 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using StreamerTycoon.Models;
 
 namespace StreamerTycoon.Views
 {
-    public partial class DesktopView : UserControl
+    /// <summary>
+    /// Interaction logic for BedroomView.xaml
+    /// </summary>
+    public partial class BedroomView : UserControl
     {
-        public DesktopView()
+        public BedroomView()
         {
             InitializeComponent();
         }

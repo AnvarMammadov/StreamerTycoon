@@ -6,108 +6,161 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1280">
 
-    <Grid Background="#1E1E1E">
+    <Grid Background="{StaticResource GeometricBackground}">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#0F2027" Offset="0.0"/>
-                    <GradientStop Color="#203A43" Offset="0.5"/>
-                    <GradientStop Color="#2C5364" Offset="1.0"/>
-                </LinearGradientBrush>
-            </Grid.Background>
+        <WrapPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="10">
 
-            <Path Data="M0,0 L1280,800 M0,800 L1280,0" Stroke="#33FFFFFF" StrokeThickness="1" IsHitTestVisible="False"/>
-            <Ellipse Width="400" Height="400" Fill="#10FFFFFF" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="-100"/>
+            <Button Style="{StaticResource DesktopIconBtn}" ToolTip="Recycle Bin" 
+                    Command="{Binding OpenAppCommand}" CommandParameter="PC">
+                <StackPanel>
+                    <Path Data="{StaticResource Icon_Trash}" Fill="#E0E0E0" Width="40" Height="40" Stretch="Uniform" Margin="0,0,0,5"/>
+                    <TextBlock Text="Junkyard" Foreground="White" TextAlignment="Center" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
 
-            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20">
+            <Button Style="{StaticResource DesktopIconBtn}" ToolTip="My Computer"
+                    Command="{Binding OpenAppCommand}" CommandParameter="PC">
+                <StackPanel>
+                    <Path Data="{StaticResource Icon_MyPC}" Fill="White" Width="40" Height="40" Stretch="Uniform" Margin="0,0,0,5"/>
+                    <TextBlock Text="System Box" Foreground="White" TextAlignment="Center" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
 
-                <Button Style="{StaticResource TaskbarBtn}" Width="80" Height="90" Margin="0,0,0,10">
-                    <StackPanel>
-                        <Viewbox Width="40" Height="40" Margin="0,0,0,5">
-                            <Path Data="{StaticResource Icon_Browser}" Fill="#4285F4"/>
-                        </Viewbox>
-                        <TextBlock Text="G2 Browser" Foreground="White" FontSize="11" TextAlignment="Center">
-                            <TextBlock.Effect>
-                                <DropShadowEffect BlurRadius="5" ShadowDepth="1"/>
-                            </TextBlock.Effect>
-                        </TextBlock>
-                    </StackPanel>
-                </Button>
+            <Button Style="{StaticResource DesktopIconBtn}" ToolTip="Web Browser"
+                    Command="{Binding OpenAppCommand}" CommandParameter="Browser">
+                <StackPanel>
+                    <Path Data="{StaticResource Icon_Web}" Fill="#4FC3F7" Width="40" Height="40" Stretch="Uniform" Margin="0,0,0,5"/>
+                    <TextBlock Text="Web Portal" Foreground="White" TextAlignment="Center" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
 
-                <Button Style="{StaticResource TaskbarBtn}" Width="80" Height="90" Margin="0,0,0,10">
-                    <StackPanel>
-                        <Viewbox Width="40" Height="40" Margin="0,0,0,5">
-                            <Path Data="{StaticResource Icon_Onion}" Fill="#8e44ad"/>
-                        </Viewbox>
-                        <TextBlock Text="Thor Browser" Foreground="White" FontSize="11" TextAlignment="Center">
-                            <TextBlock.Effect>
-                                <DropShadowEffect BlurRadius="5" ShadowDepth="1"/>
-                            </TextBlock.Effect>
-                        </TextBlock>
-                    </StackPanel>
-                </Button>
+            <Button Style="{StaticResource DesktopIconBtn}" ToolTip="Secure Chat"
+                    Command="{Binding OpenAppCommand}" CommandParameter="Chat">
+                <StackPanel>
+                    <Path Data="{StaticResource Icon_Discord}" Fill="#5865F2" Width="40" Height="40" Stretch="Uniform" Margin="0,0,0,5">
+                        <Path.Effect>
+                            <DropShadowEffect Color="#5865F2" BlurRadius="5" Opacity="0.5"/>
+                        </Path.Effect>
+                    </Path>
+                    <TextBlock Text="ChatGrid" Foreground="White" TextAlignment="Center" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
 
-                <Button Style="{StaticResource TaskbarBtn}" Width="80" Height="90">
-                    <StackPanel>
-                        <Viewbox Width="40" Height="40" Margin="0,0,0,5">
-                            <Path Data="{StaticResource Icon_Discord}" Fill="#5865F2"/>
-                        </Viewbox>
-                        <TextBlock Text="Discurse" Foreground="White" FontSize="11" TextAlignment="Center">
-                            <TextBlock.Effect>
-                                <DropShadowEffect BlurRadius="5" ShadowDepth="1"/>
-                            </TextBlock.Effect>
-                        </TextBlock>
-                    </StackPanel>
-                </Button>
+            <Button Style="{StaticResource DesktopIconBtn}" ToolTip="Streaming Platform"
+                    Command="{Binding OpenAppCommand}" CommandParameter="Stream">
+                <StackPanel>
+                    <Path Data="{StaticResource Icon_Kick}" Fill="#00E676" Width="40" Height="40" Stretch="Uniform" Margin="0,0,0,5">
+                        <Path.Effect>
+                            <DropShadowEffect Color="#00E676" BlurRadius="5" Opacity="0.4"/>
+                        </Path.Effect>
+                    </Path>
+                    <TextBlock Text="LivePulse" Foreground="White" TextAlignment="Center" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
 
-            </StackPanel>
+            <Button Style="{StaticResource DesktopIconBtn}" ToolTip="Darknet Access"
+                    Command="{Binding OpenAppCommand}" CommandParameter="Onion">
+                <StackPanel>
+                    <Path Data="{StaticResource Icon_Thor}" Fill="#AB47BC" Width="40" Height="40" Stretch="Uniform" Margin="0,0,0,5">
+                        <Path.Effect>
+                            <DropShadowEffect Color="#AB47BC" BlurRadius="8" Opacity="0.6"/>
+                        </Path.Effect>
+                    </Path>
+                    <TextBlock Text="OnionCore" Foreground="#E0E0E0" TextAlignment="Center" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
 
-            <Grid x:Name="ActiveAppContainer" Margin="50"/>
-        </Grid>
+            <Button Style="{StaticResource DesktopIconBtn}" ToolTip="Files"
+                    Command="{Binding OpenAppCommand}" CommandParameter="PC">
+                <StackPanel>
+                    <Path Data="{StaticResource Icon_Folder}" Fill="#FFD54F" Width="40" Height="40" Stretch="Uniform" Margin="0,0,0,5"/>
+                    <TextBlock Text="Dumped Data" Foreground="White" TextAlignment="Center" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
 
-        <Border Grid.Row="1" Background="#CC101010" BorderBrush="#333" BorderThickness="0,1,0,0">
+        </WrapPanel>
+
+        <Border Grid.Row="1" Background="{StaticResource Brush_Taskbar}" BorderBrush="#20FFFFFF" BorderThickness="0,1,0,0">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Width="50" Height="50" Style="{StaticResource TaskbarBtn}">
-                    <Viewbox Width="20" Height="20">
-                        <Path Data="{StaticResource Icon_Windows}" Fill="#00ADEF"/>
-                    </Viewbox>
+                <Button Grid.Column="0" Width="50" Background="Transparent" BorderThickness="0" Margin="5,0" Cursor="Hand">
+                    <Path Data="{StaticResource Icon_Start}" Fill="White" Width="22" Height="22" Stretch="Uniform">
+                        <Path.Effect>
+                            <DropShadowEffect Color="#3A6B8E" BlurRadius="5"/>
+                        </Path.Effect>
+                    </Path>
                 </Button>
 
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0">
-                    <Button Style="{StaticResource TaskbarBtn}" Margin="2">
-                        <Viewbox Width="20" Height="20">
-                            <Path Data="{StaticResource Icon_Browser}" Fill="#BBB"/>
-                        </Viewbox>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Border Width="180" Height="26" Background="#20FFFFFF" CornerRadius="2" Margin="5,0,10,0" VerticalAlignment="Center">
+                        <TextBlock Text="Search FakeOS..." Foreground="#80FFFFFF" VerticalAlignment="Center" Margin="10,0" FontSize="11"/>
+                    </Border>
+
+                    <Button Width="40" Background="Transparent" BorderThickness="0" Margin="2,0"
+                            Command="{Binding OpenAppCommand}" CommandParameter="Chat">
+                        <Grid>
+                            <Path Data="{StaticResource Icon_Discord}" Fill="#5865F2" Width="20" Height="20" Stretch="Uniform"/>
+                            <Rectangle Height="2" Width="20" Fill="#5865F2" VerticalAlignment="Bottom" Margin="0,0,0,5"/>
+                        </Grid>
                     </Button>
-                    <Button Style="{StaticResource TaskbarBtn}" Margin="2">
-                        <Viewbox Width="20" Height="20">
-                            <Path Data="{StaticResource Icon_Onion}" Fill="#BBB"/>
-                        </Viewbox>
-                    </Button>
-                    <Button Style="{StaticResource TaskbarBtn}" Margin="2">
-                        <Viewbox Width="20" Height="20">
-                            <Path Data="{StaticResource Icon_Discord}" Fill="#BBB"/>
-                        </Viewbox>
+
+                    <Button Width="40" Background="Transparent" BorderThickness="0" Margin="2,0"
+                            Command="{Binding OpenAppCommand}" CommandParameter="Onion">
+                        <Path Data="{StaticResource Icon_Thor}" Fill="#AB47BC" Width="20" Height="20" Stretch="Uniform" Opacity="0.7"/>
                     </Button>
                 </StackPanel>
 
-                <StackPanel Grid.Column="3" Orientation="Vertical" VerticalAlignment="Center" Margin="10,0,20,0">
-                    <TextBlock Text="{Binding CurrentTime}" Foreground="White" FontSize="12" HorizontalAlignment="Right"/>
-                    <TextBlock Text="{Binding CurrentDate}" Foreground="#BBB" FontSize="10" HorizontalAlignment="Right"/>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="0,0,15,0">
+                    <TextBlock Text="{Binding CurrentTime}" Foreground="White" VerticalAlignment="Center" FontSize="12" Margin="10,0"/>
+                    <TextBlock Text="{Binding CurrentDate}" Foreground="#AAA" VerticalAlignment="Center" FontSize="12"/>
                 </StackPanel>
             </Grid>
         </Border>
+
+        <Grid Grid.Row="0" Grid.RowSpan="2" Panel.ZIndex="100">
+            <ItemsControl ItemsSource="{Binding OpenWindows}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#1E1E1E" BorderBrush="#444" BorderThickness="1" CornerRadius="8" 
+                                Width="800" Height="500">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#00F0FF" BlurRadius="15" Opacity="0.4"/>
+                            </Border.Effect>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="32"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Background="#252525">
+                                    <TextBlock Text="{Binding Title}" Foreground="#AAA" VerticalAlignment="Center" Margin="15,0"/>
+
+                                    <Button Command="{Binding CloseCommand}" Content="✕" HorizontalAlignment="Right" Width="40" 
+                                            Background="Transparent" BorderThickness="0" Foreground="White" Cursor="Hand"/>
+                                </Grid>
+
+                                <ContentControl Grid.Row="1" Content="{Binding}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+
     </Grid>
 </UserControl>

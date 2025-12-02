@@ -6,61 +6,59 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1280">
 
-    <Grid>
-        <Grid.Background>
-            <RadialGradientBrush GradientOrigin="0.5,0.8" Center="0.5,0.5" RadiusX="0.8" RadiusY="0.8">
-                <GradientStop Color="#0078D4" Offset="0"/>
-                <GradientStop Color="#502D7F" Offset="0.6"/>
-                <GradientStop Color="#111111" Offset="1"/>
-            </RadialGradientBrush>
-        </Grid.Background>
+    <Grid Background="{StaticResource GeometricBackground}">
+        <Rectangle Fill="#BB000000"/>
 
-        <Rectangle Fill="Black" Opacity="0.2"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
-            <Border Width="120" Height="120" CornerRadius="60" Background="#20FFFFFF" Margin="0,0,0,20" BorderBrush="#50FFFFFF" BorderThickness="1">
-                <Border.Effect>
-                    <DropShadowEffect BlurRadius="20" Opacity="0.4" ShadowDepth="5"/>
-                </Border.Effect>
-                <Viewbox Margin="30">
-                    <Path Data="{StaticResource Icon_User}" Fill="White"/>
-                </Viewbox>
+            <Grid Width="120" Height="120" Margin="0,0,0,20">
+                <Ellipse Fill="#20FFFFFF" Stroke="#30FFFFFF" StrokeThickness="1"/>
+                <Path Data="{StaticResource Icon_User}" Fill="White" Width="50" Height="50" Stretch="Uniform" Opacity="0.8"/>
+            </Grid>
+
+            <TextBlock Text="{Binding UserName}" Foreground="White" FontSize="28" HorizontalAlignment="Center" Margin="0,0,0,30" FontWeight="Light"/>
+
+            <Border Background="#30000000" BorderBrush="#30FFFFFF" BorderThickness="1" CornerRadius="4" Width="250" Padding="5">
+                <Grid>
+                    <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" 
+                             Background="Transparent" BorderThickness="0" Foreground="White" 
+                             HorizontalContentAlignment="Center" FontSize="16" Padding="5" CaretBrush="White"/>
+
+                    <TextBlock Text="Password" IsHitTestVisible="False" Foreground="#60FFFFFF" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Password.Length, FallbackValue=0}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Password.Length, FallbackValue=1}" Value="1">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
             </Border>
 
-            <TextBlock Text="{Binding UserName}" Foreground="White" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,20">
-                <TextBlock.Effect>
-                    <DropShadowEffect BlurRadius="5" Opacity="0.5"/>
-                </TextBlock.Effect>
-            </TextBlock>
-
-            <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" 
-                     Style="{StaticResource ModernTextBox}"
-                     Margin="0,0,0,10"/>
-
-            <TextBlock Text="{Binding LoginError}" Foreground="#FF8888" HorizontalAlignment="Center" FontSize="12" Margin="0,5,0,0"/>
-
-            <Button Command="{Binding LoginCommand}" Content="Sign In" 
-                    Background="#007ACC" Foreground="White" 
-                    Margin="0,20,0,0" Padding="10" BorderThickness="0" FontWeight="Bold" Cursor="Hand">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="4"/>
-                    </Style>
-                </Button.Resources>
+            <Button Command="{Binding LoginCommand}" Content="->" Width="50" Height="40" Margin="0,20,0,0" 
+                    Background="#3A6B8E" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="18" FontWeight="Bold">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
+
+            <TextBlock Text="{Binding LoginError}" Foreground="#FF6B6B" HorizontalAlignment="Center" Margin="0,15,0,0"/>
+
         </StackPanel>
 
-        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="60,0,0,60">
-            <TextBlock Text="{Binding CurrentTime}" Foreground="White" FontSize="72" FontWeight="Thin">
-                <TextBlock.Effect>
-                    <DropShadowEffect BlurRadius="10" Opacity="0.3"/>
-                </TextBlock.Effect>
-            </TextBlock>
-            <TextBlock Text="{Binding CurrentDate}" Foreground="#DDDDDD" FontSize="24" Margin="5,0,0,0">
-                <TextBlock.Effect>
-                    <DropShadowEffect BlurRadius="5" Opacity="0.3"/>
-                </TextBlock.Effect>
-            </TextBlock>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="30">
+            <TextBlock Text="{Binding CurrentTime}" Foreground="White" FontSize="48" FontWeight="Thin" Opacity="0.8"/>
         </StackPanel>
     </Grid>
 </UserControl>
