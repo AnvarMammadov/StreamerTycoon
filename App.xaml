@@ -96,6 +96,71 @@
                 </VisualBrush.Visual>
             </VisualBrush>
 
+            <Style TargetType="{x:Type ContextMenu}">
+                <Setter Property="Background" Value="#252525"/>
+                <Setter Property="BorderBrush" Value="#444"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Foreground" Value="#EEE"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ContextMenu}">
+                            <Border Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="{x:Type MenuItem}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="#DDD"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Padding" Value="15,7"/>
+                <Setter Property="Margin" Value="0,2"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type MenuItem}">
+                            <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="3" SnapsToDevicePixels="True">
+                                <Grid>
+                                    <ContentPresenter Content="{TemplateBinding Header}" 
+                                                      Margin="{TemplateBinding Padding}"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Left"
+                                                      RecognizesAccessKey="True"/>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#323639"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="#666"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="{x:Type Separator}">
+                <Setter Property="Background" Value="#444"/>
+                <Setter Property="Height" Value="1"/>
+                <Setter Property="Margin" Value="5,2"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Separator}">
+                            <Border Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" SnapsToDevicePixels="true"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
             <Geometry x:Key="Icon_Start">M3,3H21V21H3V3M5,5V19H19V5H5M11,11H13V13H11V11Z</Geometry>
             <Geometry x:Key="Icon_Close">M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z</Geometry>
             <Geometry x:Key="Icon_Min">M19,13H5V11H19V13Z</Geometry>
@@ -107,6 +172,23 @@
             <Geometry x:Key="Icon_Discord">M4,6V18H20V6H4M20,4A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4H20M7.5,15A1.5,1.5 0 1,1 9,13.5A1.5,1.5 0 0,1 7.5,15M16.5,15A1.5,1.5 0 1,1 18,13.5A1.5,1.5 0 0,1 16.5,15M12,10L10,8H14L12,10Z</Geometry>
             <Geometry x:Key="Icon_Kick">M2,2H22V22H2V2M8,6V18H11V14L15,18H19L14,13L19,8H15L11,12V6H8Z</Geometry>
             <Geometry x:Key="Icon_Thor">M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6C8.69,6 6,8.69 6,12C6,15.31 8.69,18 12,18C15.31,18 18,15.31 18,12C18,8.69 15.31,6 12,6M12,16C9.79,16 8,14.21 8,12C8,9.79 9.79,8 12,8C14.21,8 16,9.79 16,12C16,14.21 14.21,16 12,16Z</Geometry>
+            <Geometry x:Key="Icon_CyberCursor">M 0,0 L 14,10 L 8,12 L 12,20 L 8,22 L 4,14 L 0,18 Z</Geometry>
+
+            <Style x:Key="CyberCursorPathStyle" TargetType="Path">
+                <Setter Property="Data" Value="{StaticResource Icon_CyberCursor}"/>
+                <Setter Property="Fill" Value="#8000A8FF"/>
+                <Setter Property="Stroke" Value="#00A8FF"/>
+                <Setter Property="StrokeThickness" Value="1"/>
+                <Setter Property="Stretch" Value="Uniform"/>
+                <Setter Property="Width" Value="24"/>
+                <Setter Property="Height" Value="24"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="#00A8FF" BlurRadius="8" ShadowDepth="0" Opacity="0.8"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="IsHitTestVisible" Value="False"/>
+            </Style>
 
             <Style x:Key="DesktopIconBtn" TargetType="Button">
                 <Setter Property="Background" Value="Transparent"/>
@@ -114,7 +196,7 @@
                 <Setter Property="Width" Value="80"/>
                 <Setter Property="Height" Value="90"/>
                 <Setter Property="Margin" Value="5"/>
-                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Cursor" Value="None"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -150,7 +232,7 @@
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
-                                    <Button Command="{Binding MinimizeCommand}" Width="35" Height="30" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                    <Button Command="{Binding MinimizeCommand}" Width="35" Height="30" Background="Transparent" BorderThickness="0" Cursor="None">
                                         <Path Data="{StaticResource Icon_Min}" Fill="#888" Width="10" Height="10" Stretch="Uniform"/>
                                         <Button.Style>
                                             <Style TargetType="Button">
@@ -172,7 +254,7 @@
                                         </Button.Style>
                                     </Button>
 
-                                    <Button Command="{Binding MaximizeCommand}" Width="35" Height="30" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                    <Button Command="{Binding MaximizeCommand}" Width="35" Height="30" Background="Transparent" BorderThickness="0" Cursor="None">
                                         <Path Data="M4,4H16V16H4V4M6,6V14H14V6H6Z" Fill="#888" Width="10" Height="10" Stretch="Uniform"/>
                                         <Button.Style>
                                             <Style TargetType="Button">
@@ -194,7 +276,7 @@
                                         </Button.Style>
                                     </Button>
 
-                                    <Button Command="{Binding CloseCommand}" Width="35" Height="30" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                    <Button Command="{Binding CloseCommand}" Width="35" Height="30" Background="Transparent" BorderThickness="0" Cursor="None">
                                         <Button.Style>
                                             <Style TargetType="Button">
                                                 <Setter Property="Template">
