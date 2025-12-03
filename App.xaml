@@ -7,30 +7,47 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <Color x:Key="Color_DarkBase">#101520</Color>
-            <Color x:Key="Color_Taskbar">#E60F1218</Color>
-            <Color x:Key="Color_NeonBlue">#00F0FF</Color>
-            <SolidColorBrush x:Key="Brush_Taskbar" Color="{StaticResource Color_Taskbar}"/>
+            <Color x:Key="Color_DarkBase">#121212</Color>
+            <Color x:Key="Color_WindowBg">#1E1E24</Color>
+            <Color x:Key="Color_Border">#333333</Color>
+            <Color x:Key="Color_Accent">#007ACC</Color>
 
-            <DropShadowEffect x:Key="NeonGlowBlue" Color="{StaticResource Color_NeonBlue}" BlurRadius="15" ShadowDepth="0" Opacity="0.4"/>
+            <Color x:Key="Color_MarketBg">#0F172A</Color>
+            <Color x:Key="Color_MarketCard">#1E293B</Color>
 
-            <VisualBrush x:Key="GeometricBackground" TileMode="Tile" Viewport="0,0,300,300" ViewportUnits="Absolute">
+            <Color x:Key="Color_DiscSidebar">#202225</Color>
+            <Color x:Key="Color_DiscChat">#36393F</Color>
+            <Color x:Key="Color_DiscHeader">#2F3136</Color>
+            <Color x:Key="Color_DiscInput">#40444B</Color>
+
+            <SolidColorBrush x:Key="Brush_WindowBg" Color="{StaticResource Color_WindowBg}"/>
+            <SolidColorBrush x:Key="Brush_Border" Color="{StaticResource Color_Border}"/>
+            <SolidColorBrush x:Key="Brush_MarketBg" Color="{StaticResource Color_MarketBg}"/>
+            <SolidColorBrush x:Key="Brush_MarketCard" Color="{StaticResource Color_MarketCard}"/>
+            <SolidColorBrush x:Key="Brush_DiscSidebar" Color="{StaticResource Color_DiscSidebar}"/>
+            <SolidColorBrush x:Key="Brush_DiscChat" Color="{StaticResource Color_DiscChat}"/>
+            <SolidColorBrush x:Key="Brush_DiscHeader" Color="{StaticResource Color_DiscHeader}"/>
+            <SolidColorBrush x:Key="Brush_DiscInput" Color="{StaticResource Color_DiscInput}"/>
+
+            <DropShadowEffect x:Key="NeonGlow" Color="#00A8FF" BlurRadius="12" ShadowDepth="0" Opacity="0.3"/>
+
+            <VisualBrush x:Key="GeometricBackground" TileMode="Tile" Viewport="0,0,400,400" ViewportUnits="Absolute">
                 <VisualBrush.Visual>
-                    <Grid Width="300" Height="300" Background="#101520">
-                        <Path Data="M0,0 L150,0 L0,150 Z" Fill="#151C2B"/>
-                        <Path Data="M300,0 L300,150 L150,0 Z" Fill="#121825"/>
-                        <Path Data="M0,300 L150,300 L0,150 Z" Fill="#121825"/>
-                        <Path Data="M300,300 L150,300 L300,150 Z" Fill="#151C2B"/>
-                        <Path Data="M150,0 L300,150 L150,300 L0,150 Z" Fill="#182030"/>
-                        <Ellipse Width="100" Height="100" Fill="#05FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Grid Width="400" Height="400" Background="#0A0A0A">
+                        <Path Data="M0,0 L400,400" Stroke="#151515" StrokeThickness="2"/>
+                        <Path Data="M400,0 L0,400" Stroke="#151515" StrokeThickness="2"/>
+                        <Rectangle Width="200" Height="200" Stroke="#151515" StrokeThickness="2"/>
+                        <Ellipse Width="300" Height="300" Stroke="#111" StrokeThickness="1"/>
                     </Grid>
                 </VisualBrush.Visual>
             </VisualBrush>
 
             <Geometry x:Key="Icon_Start">M3,3H21V21H3V3M5,5V19H19V5H5M11,11H13V13H11V11Z</Geometry>
+            <Geometry x:Key="Icon_Close">M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z</Geometry>
+            <Geometry x:Key="Icon_Min">M19,13H5V11H19V13Z</Geometry>
             <Geometry x:Key="Icon_MyPC">M4,2H20A2,2 0 0,1 22,4V20A2,2 0 0,1 20,22H4A2,2 0 0,1 2,20V4A2,2 0 0,1 4,2M6,4V6H18V4H6M6,8V16H18V8H6M6,18V20H18V18H6Z</Geometry>
             <Geometry x:Key="Icon_Trash">M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z</Geometry>
-            <Geometry x:Key="Icon_Web">M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12C4,13.85 4.63,15.55 5.68,16.91L9.38,10.5C9.07,9.85 8.94,9.1 9.12,8.38C9.5,6.8 11.2,5.91 12.6,6.33L12,4M12,18A6,6 0 0,1 6,12C6,11.3 6.12,10.63 6.33,10L10,16.33C10.6,17.38 11.7,18 12.8,18H12M15.5,16.5L13.5,13H17.8C17.65,14.3 17,15.5 16,16.4L15.5,16.5M16.5,8H11.5L12.5,6.3C14.75,6.3 16.5,8.1 16.5,10.3C16.5,10.8 16.4,11.3 16.2,11.7L18.4,15.5C19.4,14.5 20,13.3 20,12A8,8 0 0,0 12,4V4.5L16.5,8Z</Geometry>
+            <Geometry x:Key="Icon_Web">M16.36,14C16.44,13.34 16.5,12.68 16.5,12C16.5,11.32 16.44,10.66 16.36,10H19.74C19.9,10.64 20,11.31 20,12C20,12.69 19.9,13.36 19.74,14M14.59,19.56C15.19,18.45 15.65,17.25 15.97,16H18.92C17.96,17.65 16.43,18.9 14.59,19.56M14.34,14H9.66C9.56,13.34 9.5,12.68 9.5,12C9.5,11.32 9.56,10.66 9.66,10H14.34C14.43,10.66 14.5,11.32 14.5,12C14.5,12.68 14.43,13.34 14.34,14M12,19.96C11.17,18.76 10.5,17.43 10.09,16H13.91C13.5,17.43 12.83,18.76 12,19.96M8,12C8,12.68 8.06,13.34 8.16,14H3.5C3.31,13.36 3.22,12.69 3.22,12C3.22,11.31 3.31,10.64 3.5,10H8.16C8.06,10.66 8,11.32 8,12M5.41,16.95C6.24,17.55 7.17,18 8.16,18.29C8.42,17.63 8.65,16.91 8.84,16.15H4.26C4.55,16.45 4.96,16.73 5.41,16.95M4.26,7.85H8.84C8.65,7.09 8.42,6.37 8.16,5.71C7.17,6 6.24,6.45 5.41,7.05C4.96,7.27 4.55,7.55 4.26,7.85M12,4.03C12.83,5.23 13.5,6.57 13.91,8H10.09C10.5,6.57 11.17,5.23 12,4.03M18.92,8H15.97C15.65,6.75 15.19,5.55 14.59,4.44C16.43,5.1 17.96,6.35 18.92,8M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z</Geometry>
             <Geometry x:Key="Icon_Folder">M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z</Geometry>
             <Geometry x:Key="Icon_User">M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z</Geometry>
             <Geometry x:Key="Icon_Discord">M4,6V18H20V6H4M20,4A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4H20M7.5,15A1.5,1.5 0 1,1 9,13.5A1.5,1.5 0 0,1 7.5,15M16.5,15A1.5,1.5 0 1,1 18,13.5A1.5,1.5 0 0,1 16.5,15M12,10L10,8H14L12,10Z</Geometry>
@@ -47,12 +64,12 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" CornerRadius="2" BorderBrush="#30FFFFFF" BorderThickness="0">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="4" BorderBrush="#20FFFFFF" BorderThickness="0">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#20FFFFFF"/>
+                                    <Setter Property="Background" Value="#15FFFFFF"/>
                                     <Setter Property="BorderThickness" Value="1"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
@@ -62,112 +79,116 @@
             </Style>
 
             <DataTemplate x:Key="WindowFrameTemplate">
-                <Border Background="#1E1E1E" BorderBrush="#333" BorderThickness="1" CornerRadius="5" 
-                        Width="600" Height="400" Effect="{StaticResource NeonGlowBlue}">
+                <Border Background="{StaticResource Brush_WindowBg}" 
+                        BorderBrush="#444" BorderThickness="1" CornerRadius="6" 
+                        Width="{Binding Width}" Height="{Binding Height}" Effect="{StaticResource NeonGlow}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="32"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Background="#252525" CornerRadius="5,5,0,0">
+
+                        <Border Background="#252525" CornerRadius="6,6,0,0" BorderBrush="#333" BorderThickness="0,0,0,1">
                             <Grid>
-                                <TextBlock Text="{Binding Title}" Foreground="#AAA" VerticalAlignment="Center" Margin="10,0" FontSize="12"/>
-                                <Button Command="{Binding CloseCommand}" Content="✕" HorizontalAlignment="Right" Width="30" 
-                                        Background="Transparent" BorderThickness="0" Foreground="#FF5555" Cursor="Hand"/>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0">
+                                    <Path Data="{StaticResource Icon_MyPC}" Fill="#888" Width="14" Height="14" Stretch="Uniform" Margin="0,0,8,0"/>
+                                    <TextBlock Text="{Binding Title}" Foreground="#CCC" FontSize="12" FontFamily="Segoe UI" FontWeight="SemiBold"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
+
+                                    <Button Command="{Binding MinimizeCommand}" Width="35" Height="30" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                        <Path Data="{StaticResource Icon_Min}" Fill="#888" Width="10" Height="10" Stretch="Uniform"/>
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border Background="{TemplateBinding Background}">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="#333"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+
+                                    <Button Command="{Binding MaximizeCommand}" Width="35" Height="30" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                        <Path Data="M4,4H16V16H4V4M6,6V14H14V6H6Z" Fill="#888" Width="10" Height="10" Stretch="Uniform"/>
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border Background="{TemplateBinding Background}">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="#333"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+
+                                    <Button Command="{Binding CloseCommand}" Width="35" Height="30" 
+                                            Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border Background="{TemplateBinding Background}" CornerRadius="0,6,0,0">
+                                                                <Path Data="{StaticResource Icon_Close}" Fill="{TemplateBinding Foreground}" Width="10" Height="10" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="#C42B1C"/>
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsMouseOver" Value="False">
+                                                                    <Setter Property="Foreground" Value="#AAA"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </StackPanel>
                             </Grid>
                         </Border>
+
                         <ContentControl Grid.Row="1" Content="{Binding}"/>
                     </Grid>
                 </Border>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type vm:BrowserViewModel}">
-                <Grid Background="#EFEFEF">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Border Background="White" Margin="5" CornerRadius="5" BorderBrush="#DDD" BorderThickness="1">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="🔒 https://g2g-market.com" VerticalAlignment="Center" Margin="10,0" Foreground="Green"/>
-                        </StackPanel>
-                    </Border>
-                    <ScrollViewer Grid.Row="1">
-                        <ItemsControl ItemsSource="{Binding MarketItems}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Background="White" Margin="10,5" Padding="10" CornerRadius="5" BorderBrush="#DDD" BorderThickness="1">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding Title}" FontWeight="Bold" Foreground="#333"/>
-                                                <TextBlock Text="{Binding SellerName}" Foreground="Orange" FontSize="10"/>
-                                            </StackPanel>
-                                            <Button Grid.Column="1" Content="{Binding Price, StringFormat='${0}'}" 
-                                                    Background="#4FC3F7" Foreground="White" Padding="10,5" BorderThickness="0" Cursor="Hand"/>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </Grid>
+                <views:BrowserView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type vm:ChatViewModel}">
-                <Grid Background="#36393F">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border Background="#2F3136">
-                        <StackPanel Margin="10">
-                            <TextBlock Text="DIRECT MESSAGES" Foreground="#8E9297" FontSize="10" FontWeight="Bold" Margin="0,0,0,10"/>
-                            <Border Background="#40444B" Padding="5" CornerRadius="3">
-                                <TextBlock Text="Scammer1337" Foreground="White"/>
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                    <Grid Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="50"/>
-                        </Grid.RowDefinitions>
-                        <ScrollViewer>
-                            <ItemsControl ItemsSource="{Binding Messages}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Margin="10,5">
-                                            <TextBlock Text="{Binding Username}" Foreground="{Binding ColorHex}" FontWeight="Bold" FontSize="11"/>
-                                            <TextBlock Text="{Binding Message}" Foreground="#DCDDDE" TextWrapping="Wrap"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
-                        <TextBox Grid.Row="1" Background="#40444B" Foreground="White" BorderThickness="0" VerticalContentAlignment="Center" Margin="10" Padding="10,0" Text="Message..."/>
-                    </Grid>
-                </Grid>
+                <views:ChatView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type vm:OnionViewModel}">
-                <Grid Background="#0F0F0F">
-                    <TextBlock Text="TOR CONNECTION ESTABLISHED..." Foreground="#00FF00" FontFamily="Consolas" Margin="10,5"/>
-                    <ScrollViewer Margin="0,30,0,0">
-                        <ItemsControl ItemsSource="{Binding HackingTools}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border BorderBrush="#333" BorderThickness="0,0,0,1" Padding="10">
-                                        <TextBlock Text="{Binding}" Foreground="#AB47BC" FontFamily="Consolas"/>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </Grid>
+                <views:OnionView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:StreamAppViewModel}">
+                <views:StreamView/>
             </DataTemplate>
 
             <DataTemplate x:Key="BedroomTemplate">

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StreamerTycoon.ViewModels;
+﻿using System.Collections.ObjectModel;
 
 namespace StreamerTycoon.ViewModels
 {
@@ -12,7 +6,7 @@ namespace StreamerTycoon.ViewModels
     {
         public ObservableCollection<string> HackingTools { get; set; }
 
-        public OnionViewModel() : base("OnionCore (Encrypted)")
+        public OnionViewModel() : base("OnionCore", "Icon_Thor")
         {
             HackingTools = new ObservableCollection<string>
             {

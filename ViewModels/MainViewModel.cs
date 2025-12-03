@@ -1,43 +1,93 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq; // LINQ lazımdır (OfType, FirstOrDefault üçün)
+using System.Windows; // Visibility üçün lazımdır
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using StreamerTycoon.Models;
+using StreamerTycoon.Services;
 
 namespace StreamerTycoon.ViewModels
 {
-    // Oyunun mərhələləri
     public enum GameState
     {
-        Bedroom,    // Otaq
-        LoginScreen,// Giriş Ekranı
-        Desktop     // Masaüstü
+        Bedroom,
+        LoginScreen,
+        Desktop
     }
 
     public partial class MainViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private GameState _currentState;
+        [ObservableProperty] private GameState _currentState;
+        [ObservableProperty] private string _currentTime;
+        [ObservableProperty] private string _currentDate;
 
-        [ObservableProperty]
-        private string _currentTime;
+        // Service
+        public GameManager Game => GameManager.Instance;
 
-        [ObservableProperty]
-        private string _currentDate;
-
-        [ObservableProperty] private string _userName = "Ghost_User";
-        [ObservableProperty] private string _password = "";
-        [ObservableProperty] private string _loginError = "";
+        // Açıq Pəncərələr Kolleksiyası
+        public ObservableCollection<AppWindowViewModel> OpenWindows { get; set; } = new ObservableCollection<AppWindowViewModel>();
 
         private DispatcherTimer _timer;
 
-        public ObservableCollection<AppWindowViewModel> OpenWindows { get; set; } = new ObservableCollection<AppWindowViewModel>();
+        public MainViewModel()
+        {
+            CurrentState = GameState.Bedroom;
 
-        // Tətbiqi Açmaq Əmri
+            // Saat sistemi
+            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            _timer.Tick += (s, e) => {
+                CurrentTime = DateTime.Now.ToString("HH:mm");
+                CurrentDate = DateTime.Now.ToString("dd/MM/yyyy");
+            };
+            _timer.Start();
+        }
+
+        // Tətbiqi Açmaq (Və ya Önə Gətirmək)
         [RelayCommand]
         public void OpenApp(string appName)
         {
+            // 1. Yoxlayırıq: Bu pəncərə artıq açıqdırmı?
+            AppWindowViewModel existingWindow = null;
+
+            switch (appName)
+            {
+                case "Browser":
+                    existingWindow = OpenWindows.OfType<BrowserViewModel>().FirstOrDefault();
+                    break;
+                case "Chat":
+                    existingWindow = OpenWindows.OfType<ChatViewModel>().FirstOrDefault();
+                    break;
+                case "Onion":
+                    existingWindow = OpenWindows.OfType<OnionViewModel>().FirstOrDefault();
+                    break;
+                case "Stream":
+                    existingWindow = OpenWindows.OfType<StreamAppViewModel>().FirstOrDefault();
+                    break;
+                case "PC":
+                    // PC (System Files) base klass olduğu üçün Title ilə yoxlayırıq
+                    existingWindow = OpenWindows.FirstOrDefault(w => w.Title == "System Files");
+                    break;
+            }
+
+            // 2. Əgər tapıldısa, yenisini YARATMA, mövcud olanı önə gətir
+            if (existingWindow != null)
+            {
+                // Əgər minimize olubsa, görünən et
+                if (existingWindow.IsVisible != Visibility.Visible)
+                {
+                    existingWindow.IsVisible = Visibility.Visible;
+                }
+
+                // Digər pəncərələri arxaya at, bunu önə çək
+                foreach (var win in OpenWindows) win.ZIndex = 0;
+                existingWindow.ZIndex = 999;
+
+                return; // Metoddan çıxırıq ki, yeni pəncərə yaranmasın
+            }
+
+            // 3. Əgər tapılmadısa, yeni pəncərə yarat
             AppWindowViewModel newWindow = null;
 
             switch (appName)
@@ -55,60 +105,35 @@ namespace StreamerTycoon.ViewModels
                     newWindow = new StreamAppViewModel();
                     break;
                 case "PC":
-                    // PC qovluğu üçün sadə browser aça bilərik hələlik
-                    newWindow = new AppWindowViewModel("System Files");
+                    newWindow = new AppWindowViewModel("System Files", "Icon_MyPC");
                     break;
             }
 
             if (newWindow != null)
             {
-                // Pəncərə bağlananda kolleksiyadan silinməlidir
+                // Yeni pəncərəni önə qoyuruq
+                foreach (var win in OpenWindows) win.ZIndex = 0;
+                newWindow.ZIndex = 999;
+
+                // Bağlananda siyahıdan silinməsi üçün
                 newWindow.CloseAction = (win) => OpenWindows.Remove(win);
+
                 OpenWindows.Add(newWindow);
             }
         }
 
-
-
-        public MainViewModel()
-        {
-            // OYUN BURADAN BAŞLAYIR:
-            CurrentState = GameState.Bedroom;
-
-            // Saat sistemi
-            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            _timer.Tick += (s, e) => {
-                CurrentTime = DateTime.Now.ToString("HH:mm");
-                CurrentDate = DateTime.Now.ToString("dd/MM/yyyy");
-            };
-            _timer.Start();
-        }
-
-        // BU HİSSƏ ÇATIŞMIRDI: Otaqdan Login ekranına keçid
         [RelayCommand]
         public void EnterComputer()
         {
             CurrentState = GameState.LoginScreen;
         }
 
-        // Login ekranından Masaüstünə keçid
         [RelayCommand]
         public void Login()
         {
-            // Şifrə yoxlaması (sadəlik üçün hələlik birbaşa keçir)
-            if (!string.IsNullOrEmpty(Password))
-            {
-                CurrentState = GameState.Desktop;
-            }
-            else
-            {
-                // İstəsəniz boş şifrə ilə buraxmayın:
-                // LoginError = "Şifrəni daxil edin";
-                CurrentState = GameState.Desktop; // Test üçün birbaşa buraxırıq
-            }
+            CurrentState = GameState.Desktop;
         }
 
-        // Oyunu bağlamaq
         [RelayCommand]
         public void Shutdown()
         {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StreamerTycoon.Models
+﻿namespace StreamerTycoon.Models
 {
     public class MarketItem
     {
@@ -14,5 +8,6 @@ namespace StreamerTycoon.Models
         public double Price { get; set; }
         public string SellerName { get; set; } = string.Empty;
         public string IconPath { get; set; } = ""; // SVG Path data olacaq
+        public string RiskLevel { get; set; } = "";
     }
 }
