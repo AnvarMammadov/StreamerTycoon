@@ -3,15 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="800">
+             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="1000">
 
-    <Grid Background="#111827">
+    <Grid Background="#202124">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Background="#1F2937" BorderBrush="#374151" BorderThickness="0,0,0,1">
+        <Grid Grid.Row="0" Height="35" Background="#121212">
+            <StackPanel Orientation="Horizontal" Margin="10,5,0,0">
+                <Border Background="#323639" CornerRadius="8,8,0,0" Width="180" Height="30" Margin="0,0,-10,0" Panel.ZIndex="2">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0">
+                        <Path Data="{StaticResource Icon_Web}" Fill="#8AB4F8" Width="12" Height="12" Stretch="Uniform"/>
+                        <TextBlock Text="{Binding AddressBarText}" Foreground="White" FontSize="11" Margin="8,0,0,0" MaxWidth="120" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Text="✕" Foreground="#9AA0A6" Margin="10,0,0,0" FontSize="10" Cursor="Hand"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <Border Grid.Row="1" Background="#323639" Padding="10,5">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -19,112 +32,184 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
-                    <TextBlock Text="G2" Foreground="#EF4444" FontWeight="Bold" FontSize="20" FontStyle="Italic"/>
-                    <TextBlock Text="MARKET" Foreground="White" FontWeight="Bold" FontSize="20"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,15,0">
+                    <TextBlock Text="←" Foreground="#E8EAED" FontSize="18" Margin="5,0" Cursor="Hand" Opacity="0.5"/>
+                    <TextBlock Text="→" Foreground="#E8EAED" FontSize="18" Margin="10,0" Cursor="Hand" Opacity="0.3"/>
+                    <Button Command="{Binding GoHomeCommand}" Background="Transparent" BorderThickness="0" Cursor="Hand" Margin="5,0">
+                        <TextBlock Text="⌂" Foreground="#E8EAED" FontSize="18"/>
+                    </Button>
                 </StackPanel>
 
-                <Border Grid.Column="1" Background="#111827" CornerRadius="18" Height="36" Margin="20,0" BorderBrush="#374151" BorderThickness="1">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0">
-                        <TextBlock Text="🔒" Foreground="#10B981" Margin="0,0,8,0" FontSize="10"/>
-                        <TextBlock Text="https://g2g.market/accounts/valorant" Foreground="#9CA3AF" FontSize="12"/>
-                    </StackPanel>
+                <Border Grid.Column="1" Background="#202124" CornerRadius="16" Height="32">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="🔒" Foreground="#10B981" VerticalAlignment="Center" Margin="12,0,5,0" FontSize="10"/>
+                        <TextBox Grid.Column="1" Text="{Binding AddressBarText, UpdateSourceTrigger=PropertyChanged}" 
+                                 Background="Transparent" BorderThickness="0" Foreground="White" 
+                                 VerticalContentAlignment="Center" FontSize="12" Margin="0,0,10,0">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Enter" Command="{Binding NavigateCommand}" CommandParameter="{Binding AddressBarText}"/>
+                            </TextBox.InputBindings>
+                        </TextBox>
+                    </Grid>
                 </Border>
 
-                <Ellipse Grid.Column="2" Width="32" Height="32" Fill="#374151" Margin="0,0,20,0"/>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="15,0,0,0">
+                    <Ellipse Width="24" Height="24" Fill="#5F6368" Cursor="Hand"/>
+                </StackPanel>
             </Grid>
         </Border>
 
-        <ScrollViewer Grid.Row="1" Padding="20">
-            <ItemsControl ItemsSource="{Binding MarketItems}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+        <Grid Grid.Row="2">
 
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border Width="220" Height="280" Margin="10" Background="#1F2937" CornerRadius="8" Cursor="Hand">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.3" ShadowDepth="2"/>
-                            </Border.Effect>
+            <Grid x:Name="HomeView" Background="#202124">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMarketVisible}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
 
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="140"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="50"/>
-                                </Grid.RowDefinitions>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,-50,0,0">
+                    <TextBlock Text="Browse" Foreground="White" FontSize="72" FontWeight="Bold" 
+                               HorizontalAlignment="Center" Margin="0,0,0,30" FontFamily="Arial"/>
 
-                                <Border Background="#374151" CornerRadius="8,8,0,0" ClipToBounds="True">
-                                    <Grid>
-                                        <Path Data="{StaticResource Icon_User}" Fill="#4B5563" Stretch="Uniform" Width="60" Opacity="0.5"/>
+                    <Border Background="White" CornerRadius="24" Width="560" Height="48" Margin="0,0,0,30">
+                        <Grid>
+                            <TextBlock Text="🔍" Foreground="#9AA0A6" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                            <TextBlock Text="Search Browse or type a URL" Foreground="#5F6368" VerticalAlignment="Center" Margin="45,0,0,0"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,15,0">
+                                <TextBlock Text="🎤" Foreground="#4285F4" FontSize="16" VerticalAlignment="Center" Margin="10,0"/>
+                                <TextBlock Text="📷" Foreground="#EA4335" FontSize="16" VerticalAlignment="Center" Margin="10,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
 
-                                        <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10" CornerRadius="4" Padding="8,4">
-                                            <Border.Style>
-                                                <Style TargetType="Border">
-                                                    <Setter Property="Background" Value="#1F2937"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding RiskLevel}" Value="High">
-                                                            <Setter Property="Background" Value="#DC2626"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding RiskLevel}" Value="Medium">
-                                                            <Setter Property="Background" Value="#F59E0B"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding RiskLevel}" Value="Low">
-                                                            <Setter Property="Background" Value="#10B981"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                            <TextBlock Text="{Binding RiskLevel}" Foreground="White" FontSize="10" FontWeight="Bold"/>
-                                        </Border>
-                                    </Grid>
-                                </Border>
-
-                                <StackPanel Grid.Row="1" Margin="12,10">
-                                    <TextBlock Text="{Binding Title}" Foreground="White" FontWeight="Bold" FontSize="14" TextWrapping="Wrap" MaxHeight="40" TextTrimming="CharacterEllipsis"/>
-                                    <TextBlock Text="{Binding Type}" Foreground="#9CA3AF" FontSize="12" Margin="0,4,0,0"/>
-
-                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                        <Ellipse Width="16" Height="16" Fill="#4B5563"/>
-                                        <TextBlock Text="{Binding SellerName}" Foreground="#60A5FA" FontSize="11" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                    <ItemsControl ItemsSource="{Binding Shortcuts}" Width="600">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel HorizontalAlignment="Center" ItemWidth="100" ItemHeight="110"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding DataContext.NavigateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                        CommandParameter="{Binding Url}"
+                                        Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                    <StackPanel>
+                                        <Grid Width="48" Height="48" Margin="0,0,0,10">
+                                            <Ellipse Fill="{Binding Color}"/>
+                                            <TextBlock Text="{Binding IconText}" Foreground="White" 
+                                                       VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                       FontSize="14" FontWeight="Bold"/>
+                                        </Grid>
+                                        <TextBlock Text="{Binding Title}" Foreground="#E8EAED" FontSize="12" 
+                                                   TextAlignment="Center" HorizontalAlignment="Center"/>
                                     </StackPanel>
-                                </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Grid>
 
-                                <Border Grid.Row="2" BorderBrush="#374151" BorderThickness="0,1,0,0" Padding="12,0">
-                                    <Grid>
-                                        <StackPanel VerticalAlignment="Center">
-                                            <TextBlock Text="Price" Foreground="#9CA3AF" FontSize="10"/>
-                                            <TextBlock Text="{Binding Price, StringFormat='${0}'}" Foreground="White" FontWeight="Bold" FontSize="16"/>
-                                        </StackPanel>
 
-                                        <Button Grid.Row="2" 
-        Command="{Binding DataContext.BuyItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-        CommandParameter="{Binding}"
-        Content="{Binding Price, StringFormat='BUY - ${0}'}" 
-        Background="#3B82F6" Foreground="White" FontWeight="Bold" BorderThickness="0">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border Background="{TemplateBinding Background}" CornerRadius="4">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="#2563EB"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
-                                    </Grid>
-                                </Border>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+            <Grid x:Name="MarketView" Background="#0F1115">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMarketVisible}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border BorderBrush="#222" BorderThickness="0,0,1,0" Background="#131519" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="CATEGORIES" Foreground="#666" FontSize="10" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <RadioButton Content="All Accounts" IsChecked="True" Foreground="#DDD" Margin="0,5" Background="Transparent"/>
+                        <RadioButton Content="Valorant" Foreground="#888" Margin="0,5" Background="Transparent"/>
+                        <RadioButton Content="CS2 / Steam" Foreground="#888" Margin="0,5" Background="Transparent"/>
+
+                        <TextBlock Text="RISK LEVEL" Foreground="#666" FontSize="10" FontWeight="Bold" Margin="0,20,0,10"/>
+                        <CheckBox Content="Safe (Low)" Foreground="#10B981" Margin="0,5"/>
+                        <CheckBox Content="Risky (High)" Foreground="#EF4444" Margin="0,5"/>
+                    </StackPanel>
+                </Border>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Height="80" Background="#1A1D21" BorderBrush="#222" BorderThickness="0,0,0,1" Margin="20,20,20,0" CornerRadius="6">
+                        <Grid>
+                            <StackPanel VerticalAlignment="Center" Margin="20,0">
+                                <TextBlock Text="PREMIUM ACCOUNTS" Foreground="White" FontSize="18" FontWeight="Bold"/>
+                                <TextBlock Text="Verified sellers, instant delivery." Foreground="#666" FontSize="12"/>
+                            </StackPanel>
+                            <Button Content="SELL YOUR ACCOUNT" HorizontalAlignment="Right" Margin="20" Background="#EF4444" Foreground="White" Padding="15,8" FontWeight="Bold" BorderThickness="0"/>
+                        </Grid>
+                    </Border>
+
+                    <ScrollViewer Grid.Row="1" Padding="20">
+                        <ItemsControl ItemsSource="{Binding MarketItems}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="240" Margin="0,0,15,15" Background="#1A1D21" CornerRadius="6" BorderBrush="#333" BorderThickness="1" Cursor="Hand">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.2"/>
+                                        </Border.Effect>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="120"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Border Background="#25282E" CornerRadius="6,6,0,0">
+                                                <Path Data="{StaticResource Icon_User}" Fill="#333" Stretch="Uniform" Width="50"/>
+                                            </Border>
+                                            <StackPanel Grid.Row="1" Margin="12">
+                                                <TextBlock Text="{Binding Title}" Foreground="#EEE" FontWeight="SemiBold" FontSize="13" TextWrapping="Wrap"/>
+                                                <TextBlock Text="{Binding SellerName}" Foreground="#3B82F6" FontSize="11" Margin="0,5,0,0"/>
+                                            </StackPanel>
+                                            <Border Grid.Row="2" BorderBrush="#25282E" BorderThickness="0,1,0,0" Padding="12,10" Background="#15171B" CornerRadius="0,0,6,6">
+                                                <Grid>
+                                                    <TextBlock Text="{Binding Price, StringFormat='${0:N0}'}" Foreground="White" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+                                                    <Button HorizontalAlignment="Right" Content="BUY" Width="60" Height="26"
+                                                            Command="{Binding DataContext.BuyItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                                            CommandParameter="{Binding}"
+                                                            Background="#3B82F6" Foreground="White" FontWeight="Bold" FontSize="11" BorderThickness="0"/>
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

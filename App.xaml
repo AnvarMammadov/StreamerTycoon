@@ -3,31 +3,85 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:StreamerTycoon.ViewModels"
              xmlns:views="clr-namespace:StreamerTycoon.Views"
+             xmlns:util="clr-namespace:StreamerTycoon.Utilities"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
 
-            <Color x:Key="Color_DarkBase">#121212</Color>
             <Color x:Key="Color_WindowBg">#1E1E24</Color>
-            <Color x:Key="Color_Border">#333333</Color>
             <Color x:Key="Color_Accent">#007ACC</Color>
 
-            <Color x:Key="Color_MarketBg">#0F172A</Color>
-            <Color x:Key="Color_MarketCard">#1E293B</Color>
-
-            <Color x:Key="Color_DiscSidebar">#202225</Color>
-            <Color x:Key="Color_DiscChat">#36393F</Color>
-            <Color x:Key="Color_DiscHeader">#2F3136</Color>
-            <Color x:Key="Color_DiscInput">#40444B</Color>
-
             <SolidColorBrush x:Key="Brush_WindowBg" Color="{StaticResource Color_WindowBg}"/>
-            <SolidColorBrush x:Key="Brush_Border" Color="{StaticResource Color_Border}"/>
-            <SolidColorBrush x:Key="Brush_MarketBg" Color="{StaticResource Color_MarketBg}"/>
-            <SolidColorBrush x:Key="Brush_MarketCard" Color="{StaticResource Color_MarketCard}"/>
-            <SolidColorBrush x:Key="Brush_DiscSidebar" Color="{StaticResource Color_DiscSidebar}"/>
-            <SolidColorBrush x:Key="Brush_DiscChat" Color="{StaticResource Color_DiscChat}"/>
-            <SolidColorBrush x:Key="Brush_DiscHeader" Color="{StaticResource Color_DiscHeader}"/>
-            <SolidColorBrush x:Key="Brush_DiscInput" Color="{StaticResource Color_DiscInput}"/>
+            <SolidColorBrush x:Key="Brush_Border" Color="#333333"/>
+
+            <SolidColorBrush x:Key="ScrollBar_Track" Color="#202124"/>
+            <SolidColorBrush x:Key="ScrollBar_Thumb" Color="#5F6368"/>
+            <SolidColorBrush x:Key="ScrollBar_ThumbHover" Color="#80868B"/>
+            <Style TargetType="{x:Type ScrollBar}">
+                <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+                <Setter Property="Foreground" Value="{StaticResource ScrollBar_Thumb}"/>
+                <Setter Property="Background" Value="{StaticResource ScrollBar_Track}"/>
+                <Setter Property="Width" Value="10"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid x:Name="GridRoot" Width="10" Background="{TemplateBinding Background}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition MaxHeight="18"/>
+                                    <RowDefinition Height="0.00001*"/>
+                                    <RowDefinition MaxHeight="18"/>
+                                </Grid.RowDefinitions>
+
+                                <Track x:Name="PART_Track" Grid.RowSpan="3" IsDirectionReversed="true" Focusable="false">
+                                    <Track.Thumb>
+                                        <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" 
+                                               Style="{DynamicResource ScrollThumbStyle}"/>
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false"/>
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="false"/>
+                                    </Track.DecreaseRepeatButton>
+                                </Track>
+                            </Grid>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Orientation" Value="Horizontal">
+                                    <Setter TargetName="GridRoot" Property="Width" Value="Auto"/>
+                                    <Setter TargetName="GridRoot" Property="Height" Value="10"/>
+                                    <Setter TargetName="Thumb" Property="Tag" Value="Horizontal"/>
+                                    <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand"/>
+                                    <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ScrollThumbStyle" TargetType="{x:Type Thumb}">
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="OverridesDefaultStyle" Value="true"/>
+                <Setter Property="IsTabStop" Value="false"/>
+                <Setter Property="Focusable" Value="false"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Thumb}">
+                            <Border x:Name="Border" CornerRadius="4" Background="{TemplateBinding Background}" 
+                                    BorderBrush="Transparent" BorderThickness="1" Margin="1"/>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource ScrollBar_ThumbHover}"/>
+                                </Trigger>
+                                <Trigger Property="IsDragging" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="#A8C7FA"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
             <DropShadowEffect x:Key="NeonGlow" Color="#00A8FF" BlurRadius="12" ShadowDepth="0" Opacity="0.3"/>
 
@@ -88,7 +142,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Border Background="#252525" CornerRadius="6,6,0,0" BorderBrush="#333" BorderThickness="0,0,0,1">
+                        <Border Background="#252525" CornerRadius="6,6,0,0" BorderBrush="#333" BorderThickness="0,0,0,1" util:WindowDragHelper.EnableDrag="True">
                             <Grid>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0">
                                     <Path Data="{StaticResource Icon_MyPC}" Fill="#888" Width="14" Height="14" Stretch="Uniform" Margin="0,0,8,0"/>
@@ -96,7 +150,6 @@
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
-
                                     <Button Command="{Binding MinimizeCommand}" Width="35" Height="30" Background="Transparent" BorderThickness="0" Cursor="Hand">
                                         <Path Data="{StaticResource Icon_Min}" Fill="#888" Width="10" Height="10" Stretch="Uniform"/>
                                         <Button.Style>
@@ -141,8 +194,7 @@
                                         </Button.Style>
                                     </Button>
 
-                                    <Button Command="{Binding CloseCommand}" Width="35" Height="30" 
-                                            Background="Transparent" BorderThickness="0" Cursor="Hand">
+                                    <Button Command="{Binding CloseCommand}" Width="35" Height="30" Background="Transparent" BorderThickness="0" Cursor="Hand">
                                         <Button.Style>
                                             <Style TargetType="Button">
                                                 <Setter Property="Template">
@@ -178,19 +230,15 @@
             <DataTemplate DataType="{x:Type vm:BrowserViewModel}">
                 <views:BrowserView/>
             </DataTemplate>
-
             <DataTemplate DataType="{x:Type vm:ChatViewModel}">
                 <views:ChatView/>
             </DataTemplate>
-
             <DataTemplate DataType="{x:Type vm:OnionViewModel}">
                 <views:OnionView/>
             </DataTemplate>
-
             <DataTemplate DataType="{x:Type vm:StreamAppViewModel}">
                 <views:StreamView/>
             </DataTemplate>
-
             <DataTemplate x:Key="BedroomTemplate">
                 <views:BedroomView/>
             </DataTemplate>
@@ -199,6 +247,9 @@
             </DataTemplate>
             <DataTemplate x:Key="DesktopTemplate">
                 <views:DesktopView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:FileExplorerViewModel}">
+                <views:FileExplorerView/>
             </DataTemplate>
 
             <Style x:Key="MainViewSwitcherStyle" TargetType="ContentControl">

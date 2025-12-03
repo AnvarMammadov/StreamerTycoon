@@ -3,15 +3,75 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="800">
+             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="900">
+
+    <UserControl.Resources>
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="#2F3136"/>
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid>
+                            <Border Background="#2F3136"/>
+                            <Track Name="PART_Track" IsDirectionReversed="true">
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="Thumb">
+                                                <Border Background="#202225" CornerRadius="4"/>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
 
     <Grid Background="#36393F">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="72"/>
             <ColumnDefinition Width="240"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Background="#2F3136">
+        <Border Grid.Column="0" Background="#202225">
+            <StackPanel Margin="0,10">
+                <Border Width="48" Height="48" Background="#5865F2" CornerRadius="16" Cursor="Hand" Margin="0,0,0,10">
+                    <Path Data="{StaticResource Icon_Discord}" Fill="White" Width="28" Height="28" Stretch="Uniform"/>
+                </Border>
+
+                <Separator Background="#36393F" Width="32" Margin="0,0,0,10"/>
+
+                <Border Width="48" Height="48" Background="#36393F" CornerRadius="24" Cursor="Hand" Margin="0,5">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="CornerRadius" Value="16"/>
+                                    <Setter Property="Background" Value="#3BA55C"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock Text="ST" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Border>
+
+                <Border Width="48" Height="48" Background="#36393F" CornerRadius="24" Cursor="Hand" Margin="0,5">
+                    <TextBlock Text="G2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                </Border>
+
+                <Border Width="48" Height="48" Background="#36393F" CornerRadius="24" Cursor="Hand" Margin="0,5">
+                    <TextBlock Text="DARK" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Background="#2F3136">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="48"/>
@@ -21,76 +81,109 @@
 
                 <Border BorderBrush="#202225" BorderThickness="0,0,0,1" Padding="10">
                     <Border Background="#202225" CornerRadius="4">
-                        <TextBlock Text="Find conversation" Foreground="#72767D" VerticalAlignment="Center" Margin="10,0" FontSize="13"/>
+                        <TextBlock Text="Find or start a conversation" Foreground="#72767D" 
+                                   VerticalAlignment="Center" Margin="10,0" FontSize="13"/>
                     </Border>
                 </Border>
 
-                <ScrollViewer Grid.Row="1" Margin="0,10,0,0">
-                    <ItemsControl ItemsSource="{Binding Contacts}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Margin="8,2" Padding="8" CornerRadius="4" Cursor="Hand" Background="Transparent">
-                                    <Border.Style>
-                                        <Style TargetType="Border">
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="#393C43"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
+                <ScrollViewer Grid.Row="1" Margin="8,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="DIRECT MESSAGES" Foreground="#96989D" FontSize="11" FontWeight="Bold" Margin="8,0,0,10"/>
 
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
+                        <ItemsControl ItemsSource="{Binding Contacts}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Height="42" Margin="0,1" CornerRadius="4" Cursor="Hand" Background="Transparent">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                        <Setter Property="Background" Value="#393C43"/>
+                                                    </DataTrigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#35373C"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
 
-                                        <Grid Width="32" Height="32">
-                                            <Ellipse Fill="{Binding StatusColor}"/>
-                                            <Path Data="{StaticResource Icon_User}" Fill="White" Width="16" Height="16" Stretch="Uniform"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
 
-                                            <Border Width="14" Height="14" CornerRadius="7" Background="#2F3136" 
-                                                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="-2,-2">
-                                                <Ellipse Width="10" Height="10" Fill="{Binding StatusColor}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
+                                            <Grid Margin="10,0">
+                                                <Ellipse Width="32" Height="32" Fill="{Binding StatusColor}"/>
+                                                <Path Data="{StaticResource Icon_User}" Fill="White" Width="16" Height="16" Stretch="Uniform"/>
+                                                <Border Width="14" Height="14" CornerRadius="7" Background="#2F3136" 
+                                                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="-2,-2">
+                                                    <Ellipse Width="10" Height="10" Fill="{Binding StatusColor}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </Grid>
+
+                                            <TextBlock Grid.Column="1" Text="{Binding Name}" Foreground="#8E9297" 
+                                                       VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                                <Setter Property="Foreground" Value="White"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
                                         </Grid>
-
-                                        <TextBlock Grid.Column="1" Text="{Binding Name}" Foreground="#8E9297" 
-                                                   VerticalAlignment="Center" FontWeight="SemiBold" Margin="12,0,0,0" FontSize="14"/>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
                 </ScrollViewer>
 
-                <Border Grid.Row="2" Background="#292B2F" Padding="10">
+                <Border Grid.Row="2" Background="#292B2F" Padding="8">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Ellipse Width="32" Height="32" Fill="#3BA55C"/>
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
-                            <TextBlock Text="Ghost_User" Foreground="White" FontWeight="Bold" FontSize="12"/>
-                            <TextBlock Text="#9999" Foreground="#B9BBBE" FontSize="10"/>
+
+                        <Grid>
+                            <Ellipse Width="32" Height="32" Fill="#3BA55C"/>
+                            <Path Data="{StaticResource Icon_User}" Fill="White" Width="16" Height="16" Stretch="Uniform"/>
+                            <Border Width="12" Height="12" CornerRadius="6" Background="#292B2F" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                <Ellipse Width="8" Height="8" Fill="#3BA55C" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="8,0">
+                            <TextBlock Text="Ghost_User" Foreground="White" FontWeight="Bold" FontSize="13"/>
+                            <TextBlock Text="#9999" Foreground="#B9BBBE" FontSize="11"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <TextBlock Text="🎤" Foreground="White" Margin="5"/>
+                            <TextBlock Text="🎧" Foreground="White" Margin="5"/>
+                            <TextBlock Text="⚙️" Foreground="White" Margin="5"/>
                         </StackPanel>
                     </Grid>
                 </Border>
             </Grid>
         </Border>
 
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="48"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Border Background="#36393F" BorderBrush="#26272D" BorderThickness="0,0,0,1">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0">
-                    <TextBlock Text="@" Foreground="#8E9297" FontSize="20" Margin="0,0,8,0" FontFamily="Segoe UI Symbol"/>
+            <Border Background="#36393F" BorderBrush="#26272D" BorderThickness="0,0,0,1" Padding="16,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="@" Foreground="#8E9297" FontSize="20" Margin="0,0,8,5" FontFamily="Segoe UI Symbol"/>
                     <TextBlock Text="Scammer1337" Foreground="White" FontWeight="Bold" FontSize="16" VerticalAlignment="Center"/>
                     <Border Background="#3BA55C" Width="8" Height="8" CornerRadius="4" Margin="10,2,0,0"/>
                 </StackPanel>
@@ -108,11 +201,11 @@
 
                                 <Grid VerticalAlignment="Top" Margin="0,2,0,0">
                                     <Ellipse Width="40" Height="40" Fill="{Binding ColorHex}"/>
-                                    <Path Data="{StaticResource Icon_User}" Fill="#20000000" Stretch="Uniform" Margin="8"/>
+                                    <Path Data="{StaticResource Icon_User}" Fill="#40000000" Stretch="Uniform" Margin="8"/>
                                 </Grid>
 
                                 <StackPanel Grid.Column="1" Margin="16,0,0,0">
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
                                         <TextBlock Text="{Binding Username}" Foreground="White" FontWeight="SemiBold" FontSize="15" Cursor="Hand">
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock">
@@ -127,7 +220,7 @@
                                         <TextBlock Text="Today at 14:20" Foreground="#72767D" FontSize="11" Margin="8,3,0,0" VerticalAlignment="Center"/>
                                     </StackPanel>
 
-                                    <TextBlock Text="{Binding Message}" Foreground="#DCDDDE" TextWrapping="Wrap" FontSize="14" LineHeight="20" FontWeight="Normal"/>
+                                    <TextBlock Text="{Binding Message}" Foreground="#DCDDDE" TextWrapping="Wrap" FontSize="14" LineHeight="20"/>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
@@ -141,14 +234,20 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="40"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="40"/>
                         </Grid.ColumnDefinitions>
-                        <Border Background="#B9BBBE" Width="24" Height="24" CornerRadius="12" Margin="10,0">
+
+                        <Border Background="#B9BBBE" Width="24" Height="24" CornerRadius="12" Margin="10,0" Cursor="Hand">
                             <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="#40444B"/>
                         </Border>
 
                         <TextBox Grid.Column="1" Text="Message @Scammer1337" 
                                  Background="Transparent" Foreground="#DCDDDE" BorderThickness="0" 
                                  VerticalContentAlignment="Center" Padding="0,12" FontSize="14"/>
+
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
+                            <TextBlock Text="🎁" VerticalAlignment="Center" Foreground="#B9BBBE" Cursor="Hand"/>
+                        </StackPanel>
                     </Grid>
                 </Border>
             </Grid>

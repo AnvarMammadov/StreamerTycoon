@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Media.Media3D;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -9,23 +8,23 @@ namespace StreamerTycoon.ViewModels
     {
         [ObservableProperty] private string _title;
         [ObservableProperty] private string _iconKey;
-
-        // Pəncərənin Vəziyyəti (Görünürlüyü)
         [ObservableProperty] private Visibility _isVisible = Visibility.Visible;
 
-        // Koordinatlar (Default: Ekranın Ortası)
-        // Ekran 1280x800, Pəncərə 850x550. 
-        // X = (1280-850)/2 = 215
-        // Y = (800-550)/2 = 125
-        [ObservableProperty] private double _x = 215;
-        [ObservableProperty] private double _y = 125;
+        // --- YENİLƏNDİ: Default ölçülər böyüdüldü ---
+        // Əvvəl: 850x550 -> İndi: 1100x720
+        [ObservableProperty] private double _width = 1100;
+        [ObservableProperty] private double _height = 720;
+
+        // --- YENİLƏNDİ: Başlanğıc Koordinatları ---
+        // Ekranın ortasına düşməsi üçün təxmini hesab (1920x1080 ekran üçün)
+        // X = (1920 - 1100) / 2 = 410
+        // Y = (1080 - 720) / 2 = 180
+        [ObservableProperty] private double _x = 180;
+        [ObservableProperty] private double _y = 50;
+
         [ObservableProperty] private int _zIndex = 0;
 
-        // Ölçülər (Maximize üçün lazımdır)
-        [ObservableProperty] private double _width = 850;
-        [ObservableProperty] private double _height = 550;
-
-        // Yaddaş (Maximize edəndə köhnə yerini yadda saxlamaq üçün)
+        // Yaddaş (Restore üçün)
         private double _oldX, _oldY, _oldWidth, _oldHeight;
         private bool _isMaximized = false;
 
@@ -46,7 +45,6 @@ namespace StreamerTycoon.ViewModels
         [RelayCommand]
         public void Minimize()
         {
-            // Pəncərəni Desktop-dan gizlət (Taskbar-da qalacaq)
             IsVisible = Visibility.Collapsed;
         }
 
@@ -55,7 +53,7 @@ namespace StreamerTycoon.ViewModels
         {
             if (_isMaximized)
             {
-                // Restore (Köhnə vəziyyətə qayıt)
+                // Restore (Köhnə vəziyyətə və ölçüyə qayıt)
                 X = _oldX;
                 Y = _oldY;
                 Width = _oldWidth;
@@ -64,23 +62,28 @@ namespace StreamerTycoon.ViewModels
             }
             else
             {
-                // Maximize (Tam ekran, Taskbar çıxmaq şərtilə)
-                // Yadda saxla
+                // Maximize (Tam Ekran)
+                // 1. İndiki vəziyyəti yadda saxla
                 _oldX = X;
                 _oldY = Y;
                 _oldWidth = Width;
                 _oldHeight = Height;
 
-                // Tam ekran et (FakeOS ölçüləri: 1280x800, Taskbar 50px)
+                // 2. Real Ekran ölçülərini tətbiq et
                 X = 0;
                 Y = 0;
-                Width = 1280;
-                Height = 750; // Taskbar üçün yer saxlayırıq
+
+                // Monitorun tam eni
+                Width = SystemParameters.PrimaryScreenWidth;
+
+                // Monitorun hündürlüyü ÇIXILSIN Taskbar hündürlüyü (50px)
+                // FakeOS taskbarı DesktopView-da 50px hündürlüyündədir.
+                Height = SystemParameters.PrimaryScreenHeight - 50;
+
                 _isMaximized = true;
             }
         }
 
-        // Taskbar ikonuna basanda pəncərəni geri gətirmək üçün
         [RelayCommand]
         public void ToggleMinimize()
         {
@@ -91,7 +94,7 @@ namespace StreamerTycoon.ViewModels
             else
             {
                 IsVisible = Visibility.Visible;
-                ZIndex = 999; // Önə gətir
+                ZIndex = 999; // Pəncərəni ən önə gətir
             }
         }
     }
